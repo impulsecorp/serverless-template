@@ -1,6 +1,6 @@
 
 import os
-import shutils
+import shutil
 import torch
 import requests
 from timm.models import create_model
@@ -72,7 +72,9 @@ def load_ds(config, test_path='images', num_workers=2, batch_size=8):
 
 def dl_img(img, fname='images'):
     if not os.path.exists(fname):
-        shutils.rmtree(fname)
+        os.makedirs(fname)
+    else:
+        shutil.rmtree(fname)
         os.makedirs(fname)
     download_file(img, fname)
     return fname
