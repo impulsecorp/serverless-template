@@ -32,10 +32,9 @@ def init():
 # Reference your preloaded global model variable here.
 def inference(model_inputs:dict) -> dict:
     global model
-    global config
 
     classes = ['cancer', 'not cancer']
-    print(config)
+    config = resolve_data_config({}, model=model)
     # Parse out your arguments
     img_url = model_inputs.get('image', None)
     if img_url == None:
@@ -44,7 +43,7 @@ def inference(model_inputs:dict) -> dict:
     img_folder = dl_img(img_url)
     
     print("creating Dataloader")
-    loader = load_ds(test_path=img_folder) 
+    loader = load_ds(config, test_path=img_folder) 
 
     with torch.no_grad():
         for batch_idx, (input, aw) in enumerate(loader):
@@ -56,8 +55,8 @@ def inference(model_inputs:dict) -> dict:
     # Return the results as a dictionary
     return {'result':classes[result]}
 
-def load_ds(test_path='images', num_workers=2, batch_size=8):
-    global config
+def load_ds(config, test_path='images', num_workers=2, batch_size=8):
+    
     print(config)
     loader = create_loader(
         ImageDataset(test_path),
