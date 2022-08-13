@@ -26,6 +26,7 @@ def init():
     model.eval()
 
     config = resolve_data_config({}, model=model)
+    print(config)
 
 # Inference is ran for every server call
 # Reference your preloaded global model variable here.
@@ -34,7 +35,7 @@ def inference(model_inputs:dict) -> dict:
     global config
 
     classes = ['cancer', 'not cancer']
-
+    print(config)
     # Parse out your arguments
     img_url = model_inputs.get('image', None)
     if img_url == None:
@@ -57,6 +58,7 @@ def inference(model_inputs:dict) -> dict:
 
 def load_ds(test_path='images', num_workers=2, batch_size=8):
     global config
+    print(config)
     loader = create_loader(
         ImageDataset(test_path),
         input_size=config['input_size'],
