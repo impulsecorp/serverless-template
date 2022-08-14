@@ -10,7 +10,6 @@ from timm.data import ImageDataset, create_loader, resolve_data_config
 # Load your model to GPU as a global variable here using the variable name "model"
 def init():
     global model
-    global config
 
     url = 'https://impulse.ai/models/model_best.pth.tar'
     models_dir = 'models'
@@ -24,9 +23,6 @@ def init():
 
     model = model.cuda()
     model.eval()
-
-    config = resolve_data_config({}, model=model)
-    print(config)
 
 # Inference is ran for every server call
 # Reference your preloaded global model variable here.
